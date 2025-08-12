@@ -26,15 +26,20 @@ Questions
 15.Write a SQL query to get the total sales for each gender in each month.
 
 
-Query
-----------------
--- 1. Write a SQL query to retrieve all columns for sales made on '2022-11-05'
+## SQL Queries
 
+---
+
+### 1. Retrieve all columns for sales made on `2022-11-05`
+```sql
+SELECT * 
+FROM retail_sales
+WHERE sale_date = '2022-11-05';
 SELECT * FROM retail_sales
 WHERE sale_date = '2022-11-05';
 
--- Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022
-
+### 2. Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022
+```sql
 SELECT * FROM retail_sales
 WHERE
 category = 'Clothing'
@@ -44,36 +49,37 @@ AND
 TO_CHAR(sale_date, 'YYYY-MM') = '2022-11';
 
 
--- 3. Write a SQL query to calculate the total sales (total_sale) for each category
-
+### 3. Write a SQL query to calculate the total sales (total_sale) for each category
+```sql
 SELECT category,
 	   SUM(total_sale) AS total_sales
 FROM retail_sales
 GROUP BY 1
 
---4. Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category
-
+### 4. Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category
+```sql
 SELECT 
        ROUND(AVG(age),2) as avg_age
 FROM retail_sales
 WHERE category = 'Beauty'
 
---5. Write a SQL query to find all transactions where the total_sale is greater than 1000
-
+###5. Write a SQL query to find all transactions where the total_sale is greater than 1000
+```sql
 SELECT * FROM retail_sales
 WHERE total_sale > 1000
 
--- 6. Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category
-
-
+### 6. Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category
+```sql
 SELECT category,
 	    gender,
 	COUNT (*) AS transactions_id
 FROM retail_sales
 GROUP BY 1,2
 ORDER BY 1
--- 7. Write a SQL query to calculate the average sale for each month. Find out best selling month in each year
 
+
+ ### 7. Write a SQL query to calculate the average sale for each month. Find out best selling month in each year
+```sql
 
 SELECT --select 3 column dri t1
 	year,
@@ -95,7 +101,8 @@ GROUP BY 1,2
 WHERE rank = 1 --nak yg rank 1 sahaja
 --ORDER BY 1,3 DESC
 	  
--- 8. Write a SQL query to find the top 5 customers based on the highest total sales 
+### 8. Write a SQL query to find the top 5 customers based on the highest total sales 
+```sql
 SELECT 
 		customer_id,
 	    ROUND (SUM (total_sale), 2) as total_spend
@@ -104,8 +111,9 @@ GROUP BY 1
 ORDER BY 2 DESC 
 LIMIT 5
 
--- 9. Write a SQL query to find the number of unique customers who purchased items from each category
 
+### 9. Write a SQL query to find the number of unique customers who purchased items from each category
+```sql
 SELECT 
 	category,
 	COUNT(DISTINCT customer_id) as unique_cust_count
@@ -113,9 +121,9 @@ FROM retail_sales
 GROUP BY category
 
 
--- 10. Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17)
+###10. Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17)
 --USING CTE common table expression
-
+```sql
 WITH hourly_sale
 AS
 ()
@@ -138,8 +146,9 @@ SELECT EXTRACT (HOUR FROM  CURRENT_TIME)
 
 -- creds Zero Analyst on youtube
 
-SELECT * FROM retail_sales
---11.Write a SQL query to find the highest total_sale made in each category.
+
+### 11.Write a SQL query to find the highest total_sale made in each category.
+```sql
 SELECT 
 	category,
 	MAX(total_sale) as highest_sale
@@ -147,7 +156,8 @@ FROM retail_sales
 GROUP BY category
 ORDER BY highest_sale DESC;
 
---11.Write an SQL query to calculate the total profit for each product category.
+### 12.Write an SQL query to calculate the total profit for each product category.
+```sql
 SELECT 
 	category, 
 	ROUND(SUM(total_sale - cogs)::numeric, 2) AS total_profit
@@ -158,8 +168,9 @@ ORDER BY 2 DESC
 -- bcs cogs is double precision 
 -- ::numeric → converts the result of the SUM() from double precision to numeric.
 
-12.Write a SQL query to find the oldest and youngest customer who made a purchase in December 2022.
 
+### 12.Write a SQL query to find the oldest and youngest customer who made a purchase in December 2022.
+```sql
 SELECT 
 	   MAX(age) as max_age,
 	   MIN(age) as min_age
@@ -178,8 +189,8 @@ WHERE TO_CHAR(sale_date, 'YYYY-MM') = '2022-12'
   )
 ORDER BY age DESC
 
-13.Write a SQL query to find all customers who purchased from both the 'Clothing' and 'Beauty' categories.
-
+### 13.Write a SQL query to find all customers who purchased from both the 'Clothing' and 'Beauty' categories.
+```sql
 SELECT *
 FROM retail_sales
 WHERE customer_id IN (
@@ -190,7 +201,8 @@ WHERE customer_id IN (
     HAVING COUNT(DISTINCT category) = 2
 );
 
---14.Write a SQL query to calculate the percentage contribution of each category to total sales.
+### 14.Write a SQL query to calculate the percentage contribution of each category to total sales.
+```sql
 SELECT 
     category,
     SUM(total_sale) AS category_sales,
@@ -201,8 +213,8 @@ FROM retail_sales
 GROUP BY category
 ORDER BY percentage_sale DESC;
 
---15.Write a SQL query to get the total sales for each gender in each month.
-
+### 15.Write a SQL query to get the total sales for each gender in each month.
+```sql
 SELECT 
     gender,
     EXTRACT(MONTH FROM sale_date) as month,
