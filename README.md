@@ -26,7 +26,8 @@ Questions
 15.Write a SQL query to get the total sales for each gender in each month.
 
 
-
+Query
+----------------
 -- 1. Write a SQL query to retrieve all columns for sales made on '2022-11-05'
 
 SELECT * FROM retail_sales
